@@ -1,7 +1,7 @@
 const userEntities = require('../../database/domain/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const respone = require('../../database/domain/response')
+const response = require('../../database/domain/response')
 const status = require('../../constants/statusConstants')
 
 module.exports = loginService = async (req, res) => {
@@ -9,7 +9,7 @@ module.exports = loginService = async (req, res) => {
         const { email, password } = req.body
 
         if (!(email && password)) {
-            return res.status(400).json(respone(false, "All input is required"))
+            return res.status(400).json(response(false, "All input is required"))
         }
         const user = await userEntities.findOne({ email: email.toLowerCase() })
 
@@ -23,11 +23,10 @@ module.exports = loginService = async (req, res) => {
             )
 
             user.token = token
-            return res.status(status.success).json(respone(status.success, true, 'Login successfuly', user))
+            return res.status(status.success).json(response(status.success, true, 'Login successfuly', user))
         }
-        return res.status(status.unauthorized).json(respone(status.unauthorized, false, "Invalid Credentials"))
+        return res.status(status.unauthorized).json(response(status.unauthorized, false, "Invalid Credentials"))
     } catch (err) {
-        console.log(err)
-        return res.status(status.unauthorized).json(respone(status.unauthorized, false, err))
+        return res.status(status.unauthorized).json(response(status.unauthorized, false, err))
     }
 }

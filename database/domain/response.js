@@ -1,4 +1,4 @@
-module.exports = (statusCode, status, data, message) => {
+module.exports = (statusCode, status, message, data) => {
     return {
         status_code: statusCode,
         status,
