@@ -35,6 +35,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/', controllers.loginController)
+app.use('/notes', controllers.noteController)
 
 app.listen(process.env.PORT || 4000, () => {
   console.log(`Server is listening on port: ${process.env.PORT || 4000}`)
