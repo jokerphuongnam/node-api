@@ -1,6 +1,3 @@
-const crypto = require('crypto')
-
-const userEntities = require('../../database/domain/user')
 const noteEntities = require('../../database/domain/note')
 
 const status = require('../../constants/statusConstants')
