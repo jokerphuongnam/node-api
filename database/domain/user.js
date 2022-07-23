@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
         require: true,
         default: 'Secret'
     },
-    note_id: [
+    note_ids: [
         {
             type: Schema.Types.ObjectId,
             ref: 'notes'

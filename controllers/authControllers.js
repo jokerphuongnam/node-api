@@ -7,4 +7,8 @@ router.post("/login", middleware.rateLimiterMiddlewareUnauthorized, async (req, 
     return await authService.login(req, res)
 })
 
+router.post("/register", middleware.rateLimiterMiddlewareUnauthorized, async (req, res) => {
+    return await authService.register(req, res)
+})
+
 module.exports = router

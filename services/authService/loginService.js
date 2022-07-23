@@ -11,7 +11,7 @@ module.exports = loginService = async (req, res) => {
         if (!(email && password)) {
             return res.status(400).json(respone(false, "All input is required"))
         }
-        const user = await userEntities.findOne({ email })
+        const user = await userEntities.findOne({ email: email.toLowerCase() })
 
         if (user && (await bcrypt.compare(password, user.password))) {
             const token = await jwt.sign(
@@ -20,14 +20,14 @@ module.exports = loginService = async (req, res) => {
                 {
                     expiresIn: "7d",
                 }
-            );
+            )
 
             user.token = token
             return res.status(status.success).json(respone(status.success, true, 'Login successfuly', user))
         }
         return res.status(status.unauthorized).json(respone(status.unauthorized, false, "Invalid Credentials"))
     } catch (err) {
-        console.log(err);
+        console.log(err)
         return res.status(status.unauthorized).json(respone(status.unauthorized, false, err))
     }
 }
