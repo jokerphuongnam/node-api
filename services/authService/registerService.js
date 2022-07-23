@@ -26,7 +26,7 @@ const register = async (req, res) => {
         await user.save()
         const userClone = { ...user._doc }
         delete userClone.password
-        return res.status(status.created).json(response(status.created, true, 'Create Account successfuly', userClone))
+        return res.status(status.created).json(response(status.created, true, 'Create Account successfully', userClone))
     } catch (error) {
         return res.status(status.conflict).json(response(status.conflict, false, 'Create Account Failed'))
     }
