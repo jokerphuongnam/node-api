@@ -16,14 +16,12 @@ const noteSchema = mongoose.Schema({
         default: '#FBF048'
     },
     create_at: {
-        type: Date,
-        require: true,
-        default: Date.now
+        type: Number,
+        require: true
     },
     update_at: {
-        type: Date,
-        require: true,
-        default: Date.now
+        type: Number,
+        require: true
     },
     user_id: {
         type: Schema.Types.ObjectId,
