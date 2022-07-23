@@ -11,4 +11,8 @@ router.post("/register", middleware.rateLimiterMiddlewareUnauthorized, async (re
     return await authService.register(req, res)
 })
 
+router.get('/get-access-token', middleware.verifyTokenLogin, async (req, res) => {
+    return await authService.getAccessTokenApp(req, res)
+})
+
 module.exports = router
