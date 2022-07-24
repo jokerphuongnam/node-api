@@ -11,7 +11,7 @@ router.post('/insert-note', [middleware.verifyTokenApp, middleware.rateLimiterMi
     return await notesService.insertNote(req, res)
 })
 
-router.put('/update-note', [middleware.verifyTokenApp, middleware.rateLimiterMiddleware], async (req, res)=> {
+router.patch('/update-note', [middleware.verifyTokenApp, middleware.rateLimiterMiddleware], async (req, res)=> {
     return await notesService.updateNote(req, res)
 })
 
