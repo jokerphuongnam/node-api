@@ -15,4 +15,8 @@ router.put('/update-note', [middleware.verifyTokenApp, middleware.rateLimiterMid
     return await notesService.updateNote(req, res)
 })
 
+router.delete('/delete-note/:id', [middleware.verifyTokenApp, middleware.rateLimiterMiddleware], async (req, res)=>{
+    return await notesService.deleteNote(req, res)
+})
+
 module.exports = router

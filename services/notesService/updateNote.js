@@ -1,5 +1,3 @@
-const mongoose = require('mongoose')
-
 const noteEntities = require('../../database/domain/note')
 
 const status = require('../../constants/statusConstants')

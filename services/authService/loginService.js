@@ -23,7 +23,7 @@ module.exports = loginService = async (req, res) => {
             )
 
             user.token = token
-            return res.status(status.success).json(response(status.success, true, 'Login successfuly', user))
+            return res.status(status.success).json(response(status.success, true, 'Login successfully', user))
         }
         return res.status(status.unauthorized).json(response(status.unauthorized, false, 'Invalid Credentials'))
     } catch (err) {
