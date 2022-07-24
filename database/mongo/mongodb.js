@@ -1,5 +1,5 @@
 // ***** CONNECT DATABASE *****
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
