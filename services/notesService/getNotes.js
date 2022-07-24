@@ -1,12 +1,14 @@
-const userEntities = require('../../database/domain/user')
 const noteEntities = require('../../database/domain/note')
 
 const status = require('../../constants/statusConstants')
 const parseJwt = require('../../utils/decode')
 const response = require('../../database/domain/response')
+const note = require('../../database/domain/note')
 
 const getNotes = async (req, res) => {
     const userId = parseJwt(req.headers['authorization'].split(' ')[1]).user_id
+
+    const searchWords = req.query.search_words
 
     let page = Number(req.query.page)
     if (!page) {
@@ -22,12 +24,41 @@ const getNotes = async (req, res) => {
         return res.status(status.notfound).json(response(status.notfound, false, 'Page at least have 1 item'))
     }
 
-    const notes = await noteEntities
+    let a = 0
+
+    let notes = await noteEntities
         .find({ user_id: userId })
-        .limit(limit)
-        .skip(limit * page)
-        .sort({
-            update_at: 'descending'
+        .then(async (notes) => {
+            if (searchWords) {
+                let result = []
+                for (i in notes) {
+                    let note = notes[i]
+                    if (note.title && note.title.includes(searchWords)) {
+                        result.push(note._id)
+                    }
+                    if (note.description && note.description.includes(searchWords)) {
+                        result.push(note._id)
+                    }
+                }
+                return await noteEntities.find({
+                    _id: {
+                        $in: result
+                    }
+                })
+                .limit(limit)
+                .skip(limit * page)
+                .sort({
+                    update_at: 'descending'
+                })
+            } else {
+                return await noteEntities
+                    .find({ user_id: userId })
+                    .limit(limit)
+                    .skip(limit * page)
+                    .sort({
+                        update_at: 'descending'
+                    })
+            }
         })
 
     const lastPage = Math.ceil(await noteEntities.find({ user_id: userId }).countDocuments() / limit) - 1
