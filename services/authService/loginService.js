@@ -9,7 +9,7 @@ module.exports = loginService = async (req, res) => {
         const { email, password } = req.body
 
         if (!(email && password)) {
-            return res.status(400).json(response(false, 'All input is required'))
+            return res.status(400).json(response(400, false, 'All input is required'))
         }
         const user = await userEntities.findOne({ email: email.toLowerCase() })
 
@@ -22,8 +22,10 @@ module.exports = loginService = async (req, res) => {
                 }
             )
 
-            user.token = token
-            return res.status(status.success).json(response(status.success, true, 'Login successfully', user))
+            let userClone = {...user._doc}
+            userClone.token = token
+            delete userClone.password
+            return res.status(status.success).json(response(status.success, true, 'Login successfully', userClone))
         }
         return res.status(status.unauthorized).json(response(status.unauthorized, false, 'Invalid Credentials'))
     } catch (err) {

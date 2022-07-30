@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const response = require('../../database/domain/response')
+const status = require('../../constants/statusConstants')
 
 const getAccessTokenApp = async (req, res) => {
     const config = process.env
@@ -19,9 +20,9 @@ const getAccessTokenApp = async (req, res) => {
                 expiresIn: '0.5h',
             }
         )
-        return res.json(response(true, 'Get success access token', newtoken))
+        return res.json(response(status.success, true, 'Get success access token', newtoken))
     } catch (err) {
-        return res.status(401).send(response(false, 'Invalid Token'))
+        return res.status(401).send(response(401, false, 'Invalid Token'))
     }
 }
 

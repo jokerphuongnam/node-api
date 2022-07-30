@@ -6,12 +6,12 @@ const response = require('../../database/domain/response')
 const register = async (req, res) => {
     const { email, password } = req.body
     if (!(email && password)) {
-        return res.status(status.bad_request).send(response(false, 'All input is required'))
+        return res.status(status.bad_request).send(response(status.bad_request, false, 'All input is required'))
     }
 
     const oldUser = await userEntities.findOne({ email: email.toLowerCase() })
     if (oldUser) {
-        return res.status(status.conflict).send(response(false, 'User Already Exist!'))
+        return res.status(status.conflict).send(response(status.conflict, false, 'User Already Exist!'))
     }
 
     const encryptedPassword = await bcrypt.hash(password, 10)

@@ -16,9 +16,9 @@ const changePassword = async (req, res) => {
         }
         let user = await userEntities.findById(userId)
         if (user && (await bcrypt.compare(oldPassword, user.password))) {
-            
+
             const encryptedPassword = await bcrypt.hash(newPassword, 10)
-        
+
             await userEntities.updateOne({ user_id: userId }, { password: encryptedPassword })
             user = await userEntities.findById(userId)
             const userClone = { ...user._doc }
